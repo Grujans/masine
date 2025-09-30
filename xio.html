@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X i O</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #4CAF50; /* zelena pozadina */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 30px;
+      transition: background 0.3s;
+    }
+    h1 {
+      color: white;
+    }
+
+    #scoreboard {
+      display: flex;
+      justify-content: space-between;
+      width: 320px;
+      margin-bottom: 15px;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border: 2px solid #333;
+      font-size: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    #reset {
+      margin-top: 10px;
+      padding: 8px 15px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Igra X i O</h1>
+
+  <div id="scoreboard">
+    <div id="x-score">X: 0</div>
+    <div id="o-score">O: 0</div>
+  </div>
+
+  <div id="board"></div>
+
+  <div id="status">Na potezu: X</div>
+  <button id="reset">Nova igra</button>
+
+  <script>
+    const board = document.getElementById('board');
+    const statusText = document.getElementById('status');
+    const resetBtn = document.getElementById('reset');
+    const xScoreEl = document.getElementById('x-score');
+    const oScoreEl = document.getElementById('o-score');
+    const body = document.body;
+
+    let currentPlayer = 'X';
+    let gameActive = true;
+    let cells = Array(9).fill('');
+    let xWins = 0;
+    let oWins = 0;
+
+    // Mapiranje numpad tastera na indekse u cells
+    const numpadMap = {
+      '7': 0, '8': 1, '9': 2,
+      '4': 3, '5': 4, '6': 5,
+      '1': 6, '2': 7, '3': 8
+    };
+
+    // Kreiraj polja
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.dataset.index = i;
+      cell.addEventListener('click', cellClicked);
+      board.appendChild(cell);
+    }
+
+    function cellClicked(e) {
+      const index = e.target.dataset.index;
+      makeMove(index);
+    }
+
+    function makeMove(index) {
+      if (cells[index] !== '' || !gameActive) return;
+
+      cells[index] = currentPlayer;
+      document.querySelector(`.cell[data-index="${index}"]`).textContent = currentPlayer;
+
+      if (checkWinner()) {
+        statusText.textContent = `Pobednik je: ${currentPlayer}!`;
+        gameActive = false;
+        body.style.background = '#FFD700'; // žuta pozadina
+
+        if (currentPlayer === 'X') {
+          xWins++;
+          xScoreEl.textContent = `X: ${xWins}`;
+        } else {
+          oWins++;
+          oScoreEl.textContent = `O: ${oWins}`;
+        }
+        return;
+      }
+
+      if (!cells.includes('')) {
+        statusText.textContent = 'Nerešeno!';
+        gameActive = false;
+        body.style.background = '#FFD700'; // žuta pozadina
+        return;
+      }
+
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      statusText.textContent = `Na potezu: ${currentPlayer}`;
+    }
+
+    function checkWinner() {
+      const winningCombos = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return winningCombos.some(combo => {
+        return combo.every(i => cells[i] === currentPlayer);
+      });
+    }
+
+    resetBtn.addEventListener('click', () => {
+      cells = Array(9).fill('');
+      document.querySelectorAll('.cell').forEach(c => c.textContent = '');
+      currentPlayer = 'X';
+      gameActive = true;
+      statusText.textContent = `Na potezu: ${currentPlayer}`;
+      body.style.background = '#4CAF50'; // vrati zelenu pozadinu
+    });
+
+    // Dodaj slušanje tastature za numpad
+    document.addEventListener('keydown', (e) => {
+      if (!gameActive) return;
+      if (e.key in numpadMap) {
+        const index = numpadMap[e.key];
+        makeMove(index);
+
+resetBtn.addEventListener('click', () => {
+  cells = Array(9).fill('');
+  document.querySelectorAll('.cell').forEach(c => c.textContent = '');
+
+  // Naizmenično postavljanje početnog igrača
+  lastStartingPlayer = lastStartingPlayer === 'X' ? 'O' : 'X';
+  currentPlayer = lastStartingPlayer;
+
+  gameActive = true;
+  statusText.textContent = `Na potezu: ${currentPlayer}`;
+
+  // Postavi pozadinu na osnovu igrača koji počinje
+  body.style.background = currentPlayer === 'X' ? '#4CAF50' : '#2196F3';
+});
+
+
+      }
+    });
+  </script>
+</body>
+</html>
