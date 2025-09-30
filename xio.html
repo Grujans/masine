@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>X i O</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #4CAF50; /* zelena pozadina */
+      background: #4CAF50;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -16,6 +16,7 @@
       padding-top: 30px;
       transition: background 0.3s;
     }
+
     h1 {
       color: white;
     }
@@ -86,17 +87,33 @@
     const body = document.body;
 
     let currentPlayer = 'X';
-    let gameActive = true;
     let cells = Array(9).fill('');
+    let gameActive = true;
     let xWins = 0;
     let oWins = 0;
 
-    // Mapiranje numpad tastera na indekse u cells
     const numpadMap = {
       '7': 0, '8': 1, '9': 2,
       '4': 3, '5': 4, '6': 5,
       '1': 6, '2': 7, '3': 8
     };
+
+    // Učitaj početnog igrača iz localStorage
+    function getNextStartingPlayer() {
+      let last = localStorage.getItem('lastStartingPlayer') || 'O';
+      let next = last === 'X' ? 'O' : 'X';
+      localStorage.setItem('lastStartingPlayer', next);
+      return next;
+    }
+
+    function startNewGame() {
+      cells = Array(9).fill('');
+      document.querySelectorAll('.cell').forEach(c => c.textContent = '');
+      currentPlayer = getNextStartingPlayer();
+      gameActive = true;
+      statusText.textContent = `Na potezu: ${currentPlayer}`;
+      body.style.background = currentPlayer === 'X' ? '#4CAF50' : '#2196F3';
+    }
 
     // Kreiraj polja
     for (let i = 0; i < 9; i++) {
@@ -121,7 +138,7 @@
       if (checkWinner()) {
         statusText.textContent = `Pobednik je: ${currentPlayer}!`;
         gameActive = false;
-        body.style.background = '#FFD700'; // žuta pozadina
+        body.style.background = '#FFD700';
 
         if (currentPlayer === 'X') {
           xWins++;
@@ -136,7 +153,7 @@
       if (!cells.includes('')) {
         statusText.textContent = 'Nerešeno!';
         gameActive = false;
-        body.style.background = '#FFD700'; // žuta pozadina
+        body.style.background = '#FFD700';
         return;
       }
 
@@ -145,50 +162,26 @@
     }
 
     function checkWinner() {
-      const winningCombos = [
+      const combos = [
         [0,1,2],[3,4,5],[6,7,8],
         [0,3,6],[1,4,7],[2,5,8],
         [0,4,8],[2,4,6]
       ];
-      return winningCombos.some(combo => {
-        return combo.every(i => cells[i] === currentPlayer);
-      });
+      return combos.some(combo => combo.every(i => cells[i] === currentPlayer));
     }
 
-    resetBtn.addEventListener('click', () => {
-      cells = Array(9).fill('');
-      document.querySelectorAll('.cell').forEach(c => c.textContent = '');
-      currentPlayer = 'X';
-      gameActive = true;
-      statusText.textContent = `Na potezu: ${currentPlayer}`;
-      body.style.background = '#4CAF50'; // vrati zelenu pozadinu
-    });
+    resetBtn.addEventListener('click', startNewGame);
 
-    // Dodaj slušanje tastature za numpad
     document.addEventListener('keydown', (e) => {
       if (!gameActive) return;
       if (e.key in numpadMap) {
         const index = numpadMap[e.key];
         makeMove(index);
-
-resetBtn.addEventListener('click', () => {
-  cells = Array(9).fill('');
-  document.querySelectorAll('.cell').forEach(c => c.textContent = '');
-
-  // Naizmenično postavljanje početnog igrača
-  lastStartingPlayer = lastStartingPlayer === 'X' ? 'O' : 'X';
-  currentPlayer = lastStartingPlayer;
-
-  gameActive = true;
-  statusText.textContent = `Na potezu: ${currentPlayer}`;
-
-  // Postavi pozadinu na osnovu igrača koji počinje
-  body.style.background = currentPlayer === 'X' ? '#4CAF50' : '#2196F3';
-});
-
-
       }
     });
+
+    // Pokreni prvu partiju
+    startNewGame();
   </script>
 </body>
 </html>
