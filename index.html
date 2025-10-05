@@ -23,70 +23,6 @@
 
   <section class="gallery">
 
-
-<!-- 🔢 Brojač poseta - grujans.github.io/masine -->
-<script>
-(async () => {
-  const base = "https://api.countapi.xyz";
-  const namespace = "grujans_masine"; // jedinstveno ime za tvoj sajt
-
-  // Ključevi za brojače
-  const todayKey = namespace + "_day_" + new Date().toISOString().slice(0,10);
-  const weekKey = namespace + "_week_" + (new Date().getFullYear() + "_" + getWeekNumber(new Date()));
-  const totalKey = namespace + "_total";
-
-  // Funkcija za dobijanje broja nedelje u godini
-  function getWeekNumber(d) {
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
-    return weekNo;
-  }
-
-  // funkcija za povećanje i dobijanje brojača
-  async function increment(key) {
-    const r = await fetch(`${base}/hit/${namespace}/${key}`);
-    const j = await r.json();
-    return j.value;
-  }
-
-  // Inkrementiraj brojače (ako stranica učitana)
-  const [day, week, total] = await Promise.all([
-    increment(todayKey),
-    increment(weekKey),
-    increment(totalKey)
-  ]);
-
-  // Kreiraj prikaz
-  const box = document.createElement('div');
-  box.innerHTML = `
-    <div style="
-      position:fixed;
-      bottom:10px;
-      right:10px;
-      background:rgba(0,0,0,0.75);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:10px;
-      font-family:sans-serif;
-      font-size:14px;
-      line-height:1.4;
-      box-shadow:0 0 10px rgba(0,0,0,0.4);
-      z-index:9999;
-    ">
-      <b>Posete</b><br>
-      Danas: ${day}<br>
-      Ove nedelje: ${week}<br>
-      Ukupno: ${total}
-    </div>
-  `;
-  document.body.appendChild(box);
-})();
-</script>
-
-
-
     
     <h2>Naše Mašine</h2>
    <!--  <img src="pas.jpg" alt="ovo je naŠ ljubimac OLI"  width="400" style="border-radius: 8px;"> -->
@@ -126,8 +62,107 @@
   <footer>
     <p>&copy; 2025 Građevinske Mašine i Alati</p>
   </footer>
+
+<!-- 🔢 Moderni brojač poseta (Grujans) -->
+<script>
+(async () => {
+  const base = "https://api.countapi.xyz";
+  const namespace = "grujans_masine_v2"; // jedinstveno ime za tvoj sajt
+
+  function getWeekNumber(d) {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  }
+
+  async function increment(key) {
+    const res = await fetch(`${base}/hit/${namespace}/${key}`);
+    const data = await res.json();
+    return data.value;
+  }
+
+  const todayKey = namespace + "_day_" + new Date().toISOString().slice(0, 10);
+  const weekKey = namespace + "_week_" + (new Date().getFullYear() + "_" + getWeekNumber(new Date()));
+  const totalKey = namespace + "_total";
+
+  const [day, week, total] = await Promise.all([
+    increment(todayKey),
+    increment(weekKey),
+    increment(totalKey)
+  ]);
+
+  // Napravi brojač u donjem desnom uglu
+  const box = document.createElement("div");
+  box.id = "visitor-counter";
+  box.innerHTML = `
+    <div class="vc-header">👁️ Posete</div>
+    <div class="vc-item">Danas: <span id="vc-day">0</span></div>
+    <div class="vc-item">Nedeljno: <span id="vc-week">0</span></div>
+    <div class="vc-item">Ukupno: <span id="vc-total">0</span></div>
+  `;
+  document.body.appendChild(box);
+
+  // Stilizacija
+  const style = document.createElement("style");
+  style.textContent = `
+    #visitor-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(40, 40, 40, 0.8);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 14px;
+      border-radius: 16px;
+      padding: 12px 16px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 9999;
+      user-select: none;
+      animation: vc-fadein 1s ease-out;
+    }
+    .vc-header {
+      font-weight: bold;
+      font-size: 15px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .vc-item {
+      margin: 2px 0;
+      display: flex;
+      justify-content: space-between;
+      min-width: 130px;
+    }
+    @keyframes vc-fadein {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Animirano brojanje
+  function animateValue(id, end, duration) {
+    const el = document.getElementById(id);
+    let start = 0;
+    const stepTime = Math.abs(Math.floor(duration / end));
+    const timer = setInterval(() => {
+      start++;
+      el.textContent = start.toLocaleString("sr-RS");
+      if (start >= end) clearInterval(timer);
+    }, stepTime);
+  }
+
+  animateValue("vc-day", day, 600);
+  animateValue("vc-week", week, 800);
+  animateValue("vc-total", total, 1000);
+})();
+</script>
+
+  
 </body>
 </html>
+
 
 
 
