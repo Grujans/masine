@@ -24,9 +24,67 @@
   <section class="gallery">
 
 
-<a href="https://grujans.github.io/masine/">
-  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgrujans.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=posete&edge_flat=false"/>
-</a>
+<!-- 🔢 Brojač poseta - grujans.github.io/masine -->
+<script>
+(async () => {
+  const base = "https://api.countapi.xyz";
+  const namespace = "grujans_masine"; // jedinstveno ime za tvoj sajt
+
+  // Ključevi za brojače
+  const todayKey = namespace + "_day_" + new Date().toISOString().slice(0,10);
+  const weekKey = namespace + "_week_" + (new Date().getFullYear() + "_" + getWeekNumber(new Date()));
+  const totalKey = namespace + "_total";
+
+  // Funkcija za dobijanje broja nedelje u godini
+  function getWeekNumber(d) {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    return weekNo;
+  }
+
+  // funkcija za povećanje i dobijanje brojača
+  async function increment(key) {
+    const r = await fetch(`${base}/hit/${namespace}/${key}`);
+    const j = await r.json();
+    return j.value;
+  }
+
+  // Inkrementiraj brojače (ako stranica učitana)
+  const [day, week, total] = await Promise.all([
+    increment(todayKey),
+    increment(weekKey),
+    increment(totalKey)
+  ]);
+
+  // Kreiraj prikaz
+  const box = document.createElement('div');
+  box.innerHTML = `
+    <div style="
+      position:fixed;
+      bottom:10px;
+      right:10px;
+      background:rgba(0,0,0,0.75);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      font-family:sans-serif;
+      font-size:14px;
+      line-height:1.4;
+      box-shadow:0 0 10px rgba(0,0,0,0.4);
+      z-index:9999;
+    ">
+      <b>Posete</b><br>
+      Danas: ${day}<br>
+      Ove nedelje: ${week}<br>
+      Ukupno: ${total}
+    </div>
+  `;
+  document.body.appendChild(box);
+})();
+</script>
+
 
 
     
@@ -70,6 +128,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
