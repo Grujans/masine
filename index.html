@@ -63,11 +63,10 @@
     <p>&copy; 2025 Građevinske Mašine i Alati</p>
   </footer>
 
-<!-- 🔢 Moderni brojač poseta (Grujans) -->
 <script>
 (async () => {
   const base = "https://api.countapi.xyz";
-  const namespace = "grujans_masine_v2"; // jedinstveno ime za tvoj sajt
+  const namespace = "grujans_masine_v3"; // jedinstveno ime
 
   function getWeekNumber(d) {
     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -77,9 +76,14 @@
   }
 
   async function increment(key) {
-    const res = await fetch(`${base}/hit/${namespace}/${key}`);
-    const data = await res.json();
-    return data.value;
+    try {
+      const res = await fetch(`${base}/hit/${namespace}/${key}`);
+      const data = await res.json();
+      return data.value || 0;
+    } catch (e) {
+      console.error("Greška u brojaču:", e);
+      return 0;
+    }
   }
 
   const todayKey = namespace + "_day_" + new Date().toISOString().slice(0, 10);
@@ -92,7 +96,7 @@
     increment(totalKey)
   ]);
 
-  // Napravi brojač u donjem desnom uglu
+  // Napravi brojač
   const box = document.createElement("div");
   box.id = "visitor-counter";
   box.innerHTML = `
@@ -103,23 +107,21 @@
   `;
   document.body.appendChild(box);
 
-  // Stilizacija
+  // Stilizacija (žuta tema)
   const style = document.createElement("style");
   style.textContent = `
     #visitor-counter {
       position: fixed;
       bottom: 20px;
       right: 20px;
-       background: rgba(255, 215, 0, 0.9); 
-  color: #222; 
+      background: rgba(255, 215, 0, 0.9);
+      color: #222;
       font-family: 'Segoe UI', sans-serif;
       font-size: 14px;
       border-radius: 16px;
       padding: 12px 16px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 9999;
-      user-select: none;
       animation: vc-fadein 1s ease-out;
     }
     .vc-header {
@@ -141,11 +143,12 @@
   `;
   document.head.appendChild(style);
 
-  // Animirano brojanje
+  // Animacija
   function animateValue(id, end, duration) {
     const el = document.getElementById(id);
+    if (!el) return;
     let start = 0;
-    const stepTime = Math.abs(Math.floor(duration / end));
+    const stepTime = Math.abs(Math.floor(duration / (end || 1)));
     const timer = setInterval(() => {
       start++;
       el.textContent = start.toLocaleString("sr-RS");
@@ -159,9 +162,11 @@
 })();
 </script>
 
+
   
 </body>
 </html>
+
 
 
 
