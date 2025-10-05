@@ -13,6 +13,25 @@ header {
   padding: 2rem;
 }
 
+header {
+  display: flex;
+  align-items: center; /* vertikalno poravnanje */
+  background-color: #000; /* crna pozadina */
+  padding: 15px 30px;
+}
+
+header .logo {
+  height: 60px; /* prilagodi veličinu logotipa */
+  margin-right: 15px; /* razmak između logotipa i naslova */
+}
+
+header h1 {
+  color: gold; /* zlatna slova */
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+
 .gallery {
   padding: 2rem;
   background-color: #fff;
@@ -91,4 +110,5 @@ footer {
   color: #ffcc00;
   font-weight: bold;
 }
+
 
