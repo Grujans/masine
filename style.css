@@ -55,3 +55,40 @@ footer {
   text-align: center;
   padding: 1rem;
 }
+#galerija {
+  text-align: center;
+  margin-top: 40px;
+  color: #fff;
+}
+
+.galerija {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.slika {
+  background: rgba(40, 40, 40, 0.8);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  width: 300px;
+  transition: transform 0.3s;
+}
+
+.slika:hover {
+  transform: scale(1.05);
+}
+
+.slika img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.slika p {
+  margin-top: 8px;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
