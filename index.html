@@ -178,36 +178,83 @@
 
   
 </script>-->
-<div id="counter-container" style="position: fixed; bottom: 10px; right: 10px; background: rgba(40,40,40,0.8); color: yellow; padding: 10px; border-radius: 10px; font-family: Arial;">
-  <div>Dnevno: <span id="daily-count">0</span></div>
-  <div>Nedeljno: <span id="weekly-count">0</span></div>
-  <div>Ukupno: <span id="total-count">0</span></div>
+<!-- 📊 Brojač posećenosti -->
+<div id="counter-container">
+  <h4>Posećenost</h4>
+  <div class="counter-item">📅 Danas: <span id="daily-count">0</span></div>
+  <div class="counter-item">📆 Ove nedelje: <span id="weekly-count">0</span></div>
+  <div class="counter-item">📈 Ukupno: <span id="total-count">0</span></div>
 </div>
 
+<style>
+  #counter-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #ffd700;
+    font-family: "Segoe UI", Arial, sans-serif;
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    font-size: 15px;
+    text-align: left;
+    z-index: 9999;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  #counter-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+  }
+  #counter-container h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 5px;
+  }
+  .counter-item {
+    margin-top: 5px;
+  }
+  .counter-item span {
+    font-weight: bold;
+    color: #fffacd;
+    text-shadow: 0 0 6px rgba(255, 255, 200, 0.6);
+  }
+</style>
+
 <script>
-const today = new Date();
-const day = today.toISOString().split('T')[0]; // 2025-10-07
-const week = `${today.getFullYear()}-W${Math.ceil(today.getDate()/7)}`;
-const totalKey = "grujans_total";
-const dailyKey = `grujans_${day}`;
-const weeklyKey = `grujans_${week}`;
+  const today = new Date();
+  const day = today.toISOString().split('T')[0]; // format 2025-10-07
+  const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
+  const totalKey = "grujans_total";
+  const dailyKey = `grujans_${day}`;
+  const weeklyKey = `grujans_${week}`;
 
-function updateCounter(key, elementId) {
-  fetch(`https://api.countapi.xyz/hit/${key}`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById(elementId).innerText = data.value;
-    });
-}
+  function updateCounter(key, elementId) {
+    fetch(`https://api.countapi.xyz/hit/${key}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById(elementId).innerText = data.value;
+      })
+      .catch(() => {
+        document.getElementById(elementId).innerText = "—";
+      });
+  }
 
-updateCounter(totalKey, "total-count");
-updateCounter(dailyKey, "daily-count");
-updateCounter(weeklyKey, "weekly-count");
+  updateCounter(totalKey, "total-count");
+  updateCounter(dailyKey, "daily-count");
+  updateCounter(weeklyKey, "weekly-count");
 </script>
+
 
   
 </body>
 </html>
+
 
 
 
