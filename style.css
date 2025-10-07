@@ -68,47 +68,74 @@ header h1 {
   text-align: center;
 }
 
-footer {
-  background-color: #222;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
-#galerija {
-  text-align: center;
-  margin-top: 40px;
-  color: #fff;
-}
-
-.galerija {
+.footer-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #111;
+  color: #ccc;
+  padding: 15px 30px;
+  border-top: 1px solid rgba(255,215,0,0.3);
+  font-family: "Segoe UI", sans-serif;
 }
 
-.slika {
-  background: rgba(40, 40, 40, 0.8);
-  padding: 10px;
+#stats-panel {
+  background: linear-gradient(145deg, rgba(10,10,10,0.95), rgba(25,25,25,0.9));
+  border: 1px solid rgba(255,215,0,0.3);
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  width: 300px;
-  transition: transform 0.3s;
+  padding: 10px 15px;
+  color: #ffd700;
+  font-family: "Orbitron", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  width: 220px;
+  box-shadow: 0 0 20px rgba(255,215,0,0.2);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 1.2s ease;
 }
 
-.slika:hover {
-  transform: scale(1.05);
+.stats-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,215,0,0.3);
+  padding-bottom: 5px;
+  margin-bottom: 6px;
 }
 
-.slika img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.slika p {
-  margin-top: 8px;
-  color: #ffcc00;
+.stats-title {
   font-weight: bold;
+  color: #fff;
+  font-size: 13px;
+  text-shadow: 0 0 8px rgba(255,215,0,0.6);
 }
 
+.led-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0f0, #030);
+  box-shadow: 0 0 5px #0f0;
+  animation: pulseLed 2s infinite ease-in-out;
+}
 
+@keyframes pulseLed {
+  0%,100% { opacity: 0.9; }
+  50% { opacity: 0.4; }
+}
+
+.stats-body .stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,215,0,0.1);
+}
+
+.stats-body .stat:last-child { border-bottom: none; }
+
+.label { color: #bbb; }
+
+.value {
+  font-weight: bold;
+  color: #fffacd;
+  text-shadow: 0 0 6px rgba(255,255,200,0.8);
+}
