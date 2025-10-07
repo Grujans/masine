@@ -73,268 +73,31 @@
     <p>Telefon: +381 69 1223350</p>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Građevinske mašine i alati</p>
-  </footer>
+ <footer class="footer-container">
+  <p>© 2025 Građevinske mašine i alati</p>
 
-<!--  <script>
-(async () => {
-  const base = "https://api.countapi.xyz";
-  const namespace = "grujans_masine_v3"; // jedinstveno ime
-
-  function getWeekNumber(d) {
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-  }
-
-  async function increment(key) {
-    try {
-      const res = await fetch(`${base}/hit/${namespace}/${key}`);
-      const data = await res.json();
-      return data.value || 0;
-    } catch (e) {
-      console.error("Greška u brojaču:", e);
-      return 0;
-    }
-  }
-
-  const todayKey = namespace + "_day_" + new Date().toISOString().slice(0, 10);
-  const weekKey = namespace + "_week_" + (new Date().getFullYear() + "_" + getWeekNumber(new Date()));
-  const totalKey = namespace + "_total";
-
-  const [day, week, total] = await Promise.all([
-    increment(todayKey),
-    increment(weekKey),
-    increment(totalKey)
-  ]);
-
-  // Napravi brojač
-  const box = document.createElement("div");
-  box.id = "visitor-counter";
-  box.innerHTML = `
-    <div class="vc-header">👁️ Posete</div>
-    <div class="vc-item">Danas: <span id="vc-day">0</span></div>
-    <div class="vc-item">Nedeljno: <span id="vc-week">0</span></div>
-    <div class="vc-item">Ukupno: <span id="vc-total">0</span></div>
-  `;
-  document.body.appendChild(box);
-
-  // Stilizacija (žuta tema)
-  const style = document.createElement("style");
-  style.textContent = `
-    #visitor-counter {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 215, 0, 0.9);
-      color: #222;
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 14px;
-      border-radius: 16px;
-      padding: 12px 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 9999;
-      animation: vc-fadein 1s ease-out;
-    }
-    .vc-header {
-      font-weight: bold;
-      font-size: 15px;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-    .vc-item {
-      margin: 2px 0;
-      display: flex;
-      justify-content: space-between;
-      min-width: 130px;
-    }
-    @keyframes vc-fadein {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Animacija
-  function animateValue(id, end, duration) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    let start = 0;
-    const stepTime = Math.abs(Math.floor(duration / (end || 1)));
-    const timer = setInterval(() => {
-      start++;
-      el.textContent = start.toLocaleString("sr-RS");
-      if (start >= end) clearInterval(timer);
-    }, stepTime);
-  }
-
-  animateValue("vc-day", day, 600);
-  animateValue("vc-week", week, 800);
-  animateValue("vc-total", total, 1000);
-})(); 
-
-
-  
-</script>-->
-<!-- 📊 Brojač posećenosti -->
-<!-- ⚙️ INDUSTRIJSKI BROJAČ POSEĆENOSTI (GRUJANS MAŠINE) -->
-<div id="stats-panel">
-  <div class="stats-header">
-    <span class="led-dot"></span>
-    <span class="stats-title">GRUJANS MAŠINE – POSEĆENOST</span>
-  </div>
-  <div class="stats-body">
-    <div class="stat">
-      <span class="label">📅 Danas</span>
-      <span class="value" id="daily-count">0</span>
+  <div id="stats-panel">
+    <div class="stats-header">
+      <span class="led-dot"></span>
+      <span class="stats-title">Posećenost</span>
     </div>
-    <div class="stat">
-      <span class="label">📆 Nedelja</span>
-      <span class="value" id="weekly-count">0</span>
-    </div>
-    <div class="stat">
-      <span class="label">🗓 Mesec</span>
-      <span class="value" id="monthly-count">0</span>
-    </div>
-    <div class="stat">
-      <span class="label">📈 Ukupno</span>
-      <span class="value" id="total-count">0</span>
+    <div class="stats-body">
+      <div class="stat"><span class="label">📅 Danas</span><span class="value" id="daily-count">0</span></div>
+      <div class="stat"><span class="label">📆 Nedelja</span><span class="value" id="weekly-count">0</span></div>
+      <div class="stat"><span class="label">🗓 Mesec</span><span class="value" id="monthly-count">0</span></div>
+      <div class="stat"><span class="label">📈 Ukupno</span><span class="value" id="total-count">0</span></div>
     </div>
   </div>
-</div>
+</footer>
 
-<style>
-  /* 💠 PANEL STIL */
-  #stats-panel {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: linear-gradient(145deg, rgba(10,10,10,0.95), rgba(25,25,25,0.9));
-    border: 1px solid rgba(255,215,0,0.3);
-    border-radius: 18px;
-    padding: 15px 20px;
-    color: #ffd700;
-    font-family: "Orbitron", "Segoe UI", Arial, sans-serif;
-    font-size: 15px;
-    width: 250px;
-    box-shadow: 0 0 20px rgba(255,215,0,0.25), inset 0 0 10px rgba(255,255,255,0.05);
-    backdrop-filter: blur(6px);
-    z-index: 9999;
-    animation: fadeInUp 1.2s ease;
-  }
 
-  @keyframes fadeInUp {
-    from {opacity: 0; transform: translateY(30px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-
-  /* 🔹 GORNJI NASLOV */
-  .stats-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid rgba(255,215,0,0.3);
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-  }
-
-  .stats-title {
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 8px rgba(255,215,0,0.7);
-    font-size: 14px;
-  }
-
-  .led-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #0f0, #030);
-    box-shadow: 0 0 6px #0f0;
-    animation: pulseLed 2s infinite ease-in-out;
-  }
-
-  @keyframes pulseLed {
-    0%, 100% { opacity: 0.9; box-shadow: 0 0 6px #0f0; }
-    50% { opacity: 0.3; box-shadow: 0 0 1px #030; }
-  }
-
-  /* 📊 BROJEVI */
-  .stats-body .stat {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(255,215,0,0.1);
-  }
-
-  .stats-body .stat:last-child {
-    border-bottom: none;
-  }
-
-  .label {
-    color: #ccc;
-  }
-
-  .value {
-    font-weight: bold;
-    color: #fffacd;
-    text-shadow: 0 0 10px rgba(255,255,200,0.8);
-    min-width: 45px;
-    text-align: right;
-    transition: all 0.3s ease;
-  }
-
-  /* 🖱 Efekat na hover */
-  #stats-panel:hover {
-    box-shadow: 0 0 30px rgba(255,215,0,0.4), inset 0 0 15px rgba(255,255,255,0.1);
-    transform: scale(1.02);
-  }
-</style>
-
-<script>
-  // 📅 Definicije ključeva
-  const today = new Date();
-  const day = today.toISOString().split('T')[0];
-  const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
-  const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
-
-  const totalKey = "grujans_total";
-  const dailyKey = `grujans_${day}`;
-  const weeklyKey = `grujans_${week}`;
-  const monthlyKey = `grujans_${month}`;
-
-  // ⚙️ Učitavanje i animacija brojeva
-  function updateCounter(key, elementId) {
-    fetch(`https://api.countapi.xyz/hit/${key}`)
-      .then(res => res.json())
-      .then(data => animateValue(document.getElementById(elementId), 0, data.value, 1200))
-      .catch(() => document.getElementById(elementId).innerText = "—");
-  }
-
-  function animateValue(el, start, end, duration) {
-    let startTime = null;
-    function animate(currentTime) {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      el.innerText = Math.floor(progress * (end - start) + start);
-      if (progress < 1) requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-  }
-
-  updateCounter(totalKey, "total-count");
-  updateCounter(dailyKey, "daily-count");
-  updateCounter(weeklyKey, "weekly-count");
-  updateCounter(monthlyKey, "monthly-count");
-</script>
 
 
 
   
 </body>
 </html>
+
 
 
 
