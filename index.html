@@ -91,12 +91,38 @@
 </footer>
 
 
+<script>
+  const today = new Date();
+  const day = today.toISOString().split('T')[0];
+  const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
+  const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+  const totalKey = "grujans_total";
+  const dailyKey = `grujans_${day}`;
+  const weeklyKey = `grujans_${week}`;
+  const monthlyKey = `grujans_${month}`;
 
+  function updateCounter(key, elementId) {
+    fetch(`https://api.countapi.xyz/hit/${key}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById(elementId).innerText = data.value;
+      })
+      .catch(() => {
+        document.getElementById(elementId).innerText = "—";
+      });
+  }
+
+  updateCounter(totalKey, "total-count");
+  updateCounter(dailyKey, "daily-count");
+  updateCounter(weeklyKey, "weekly-count");
+  updateCounter(monthlyKey, "monthly-count");
+</script>
 
 
   
 </body>
 </html>
+
 
 
 
