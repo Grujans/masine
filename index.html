@@ -178,10 +178,37 @@
 
   
 </script>-->
+<div id="counter-container" style="position: fixed; bottom: 10px; right: 10px; background: rgba(40,40,40,0.8); color: yellow; padding: 10px; border-radius: 10px; font-family: Arial;">
+  <div>Dnevno: <span id="daily-count">0</span></div>
+  <div>Nedeljno: <span id="weekly-count">0</span></div>
+  <div>Ukupno: <span id="total-count">0</span></div>
+</div>
+
+<script>
+const today = new Date();
+const day = today.toISOString().split('T')[0]; // 2025-10-07
+const week = `${today.getFullYear()}-W${Math.ceil(today.getDate()/7)}`;
+const totalKey = "grujans_total";
+const dailyKey = `grujans_${day}`;
+const weeklyKey = `grujans_${week}`;
+
+function updateCounter(key, elementId) {
+  fetch(`https://api.countapi.xyz/hit/${key}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById(elementId).innerText = data.value;
+    });
+}
+
+updateCounter(totalKey, "total-count");
+updateCounter(dailyKey, "daily-count");
+updateCounter(weeklyKey, "weekly-count");
+</script>
 
   
 </body>
 </html>
+
 
 
 
