@@ -179,81 +179,163 @@
   
 </script>-->
 <!-- 📊 Brojač posećenosti -->
-<div id="counter-container">
-  <h4>Posećenost</h4>
-  <div class="counter-item">📅 Danas: <span id="daily-count">0</span></div>
-  <div class="counter-item">📆 Ove nedelje: <span id="weekly-count">0</span></div>
-  <div class="counter-item">📈 Ukupno: <span id="total-count">0</span></div>
+<!-- ⚙️ INDUSTRIJSKI BROJAČ POSEĆENOSTI (GRUJANS MAŠINE) -->
+<div id="stats-panel">
+  <div class="stats-header">
+    <span class="led-dot"></span>
+    <span class="stats-title">GRUJANS MAŠINE – POSEĆENOST</span>
+  </div>
+  <div class="stats-body">
+    <div class="stat">
+      <span class="label">📅 Danas</span>
+      <span class="value" id="daily-count">0</span>
+    </div>
+    <div class="stat">
+      <span class="label">📆 Nedelja</span>
+      <span class="value" id="weekly-count">0</span>
+    </div>
+    <div class="stat">
+      <span class="label">🗓 Mesec</span>
+      <span class="value" id="monthly-count">0</span>
+    </div>
+    <div class="stat">
+      <span class="label">📈 Ukupno</span>
+      <span class="value" id="total-count">0</span>
+    </div>
+  </div>
 </div>
 
 <style>
-  #counter-container {
+  /* 💠 PANEL STIL */
+  #stats-panel {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: rgba(0, 0, 0, 0.85);
-    color: #ffd700;
-    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(145deg, rgba(10,10,10,0.95), rgba(25,25,25,0.9));
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 18px;
     padding: 15px 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    font-family: "Orbitron", "Segoe UI", Arial, sans-serif;
     font-size: 15px;
-    text-align: left;
+    width: 250px;
+    box-shadow: 0 0 20px rgba(255,215,0,0.25), inset 0 0 10px rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
     z-index: 9999;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    backdrop-filter: blur(4px);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 1.2s ease;
   }
-  #counter-container:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(30px);}
+    to {opacity: 1; transform: translateY(0);}
   }
-  #counter-container h4 {
-    margin: 0 0 8px 0;
-    font-size: 16px;
+
+  /* 🔹 GORNJI NASLOV */
+  .stats-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,215,0,0.3);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+
+  .stats-title {
+    font-weight: bold;
     color: #fff;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-    padding-bottom: 5px;
+    text-shadow: 0 0 8px rgba(255,215,0,0.7);
+    font-size: 14px;
   }
-  .counter-item {
-    margin-top: 5px;
+
+  .led-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #0f0, #030);
+    box-shadow: 0 0 6px #0f0;
+    animation: pulseLed 2s infinite ease-in-out;
   }
-  .counter-item span {
+
+  @keyframes pulseLed {
+    0%, 100% { opacity: 0.9; box-shadow: 0 0 6px #0f0; }
+    50% { opacity: 0.3; box-shadow: 0 0 1px #030; }
+  }
+
+  /* 📊 BROJEVI */
+  .stats-body .stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,215,0,0.1);
+  }
+
+  .stats-body .stat:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    color: #ccc;
+  }
+
+  .value {
     font-weight: bold;
     color: #fffacd;
-    text-shadow: 0 0 6px rgba(255, 255, 200, 0.6);
+    text-shadow: 0 0 10px rgba(255,255,200,0.8);
+    min-width: 45px;
+    text-align: right;
+    transition: all 0.3s ease;
+  }
+
+  /* 🖱 Efekat na hover */
+  #stats-panel:hover {
+    box-shadow: 0 0 30px rgba(255,215,0,0.4), inset 0 0 15px rgba(255,255,255,0.1);
+    transform: scale(1.02);
   }
 </style>
 
 <script>
+  // 📅 Definicije ključeva
   const today = new Date();
-  const day = today.toISOString().split('T')[0]; // format 2025-10-07
+  const day = today.toISOString().split('T')[0];
   const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
+  const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+
   const totalKey = "grujans_total";
   const dailyKey = `grujans_${day}`;
   const weeklyKey = `grujans_${week}`;
+  const monthlyKey = `grujans_${month}`;
 
+  // ⚙️ Učitavanje i animacija brojeva
   function updateCounter(key, elementId) {
     fetch(`https://api.countapi.xyz/hit/${key}`)
       .then(res => res.json())
-      .then(data => {
-        document.getElementById(elementId).innerText = data.value;
-      })
-      .catch(() => {
-        document.getElementById(elementId).innerText = "—";
-      });
+      .then(data => animateValue(document.getElementById(elementId), 0, data.value, 1200))
+      .catch(() => document.getElementById(elementId).innerText = "—");
+  }
+
+  function animateValue(el, start, end, duration) {
+    let startTime = null;
+    function animate(currentTime) {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      el.innerText = Math.floor(progress * (end - start) + start);
+      if (progress < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
   }
 
   updateCounter(totalKey, "total-count");
   updateCounter(dailyKey, "daily-count");
   updateCounter(weeklyKey, "weekly-count");
+  updateCounter(monthlyKey, "monthly-count");
 </script>
+
 
 
   
 </body>
 </html>
+
 
 
 
