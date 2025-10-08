@@ -96,13 +96,15 @@
   const day = today.toISOString().split('T')[0];
   const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
   const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
-  const totalKey = "grujans_total";
-  const dailyKey = `grujans_${day}`;
-  const weeklyKey = `grujans_${week}`;
-  const monthlyKey = `grujans_${month}`;
+
+  const namespace = "grujans_masine"; // bilo koji naziv sajta
+  const totalKey = "total";
+  const dailyKey = `day_${day}`;
+  const weeklyKey = `week_${week}`;
+  const monthlyKey = `month_${month}`;
 
   function updateCounter(key, elementId) {
-    fetch(`https://api.countapi.xyz/hit/${key}`)
+    fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`)
       .then(res => res.json())
       .then(data => {
         document.getElementById(elementId).innerText = data.value;
@@ -122,6 +124,7 @@
   
 </body>
 </html>
+
 
 
 
