@@ -16,6 +16,14 @@ header {
 }
 
 header .logo {
+  @keyframes rotacija {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotiraj {
+  animation: rotacija 1s linear;
+}
   width: 120px; /* po potrebi smanji/povećaj */
   height: auto;
   margin-bottom: 10px;
@@ -135,4 +143,5 @@ header h1 {
   color: #fffacd;
   text-shadow: 0 0 6px rgba(255,255,200,0.8);
 }
+
 
