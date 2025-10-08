@@ -1,208 +1,110 @@
 <!DOCTYPE html>
 <html lang="sr">
-
-<meta name="google-site-verification" content="qJnNK6qGXwf2XKqZo1pF8nPTp4QbRMgR0rrjho2CEhs" />
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Građevinske Mašine i Alati</title>
   <link rel="stylesheet" href="style.css">
 
-
-<meta name="description" content="Iznajmljujemo građevinske mašine i alate">
-<meta name="keywords" content="podupirači, podupiraci, fetne, vibro letva, mesalica, mešalica, agregat, ">
-<meta name="robots" content="index, follow">
-
-  
+  <meta name="description" content="Iznajmljujemo građevinske mašine i alate">
+  <meta name="keywords" content="podupirači, podupiraci, fetne, vibro letva, mesalica, mešalica, agregat">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="qJnNK6qGXwf2XKqZo1pF8nPTp4QbRMgR0rrjho2CEhs" />
 </head>
+
 <body>
   <header>
-      <img src="images/Grujans logo mali.png" alt="Grujans logo" class="logo">
-  
+    <img src="images/Grujans logo mali.png" alt="Grujans logo" class="logo">
     <h1>Građevinske mašine i alati</h1>
-    
-    <!-- <p1>  Specijalizovani za najkvalitetnije alate i opremu u građevinskoj industriji  </p1>-->
-    
   </header>
 
   <section class="gallery">
-
-    
     <h2>Naše Mašine</h2>
-   <!--  <img src="pas.jpg" alt="ovo je naŠ ljubimac OLI"  width="400" style="border-radius: 8px;"> -->
     <div class="items">
       <div class="item">
         <img src="images/Bager grujans 3d.png" alt="Bager Grujans 3D">
         <p>Bager - idealan za iskopavanje</p>
       </div>
       <div class="item">
-          <img src="images/Mesalica grujans 3d.png" alt="Mešalica Grujans 3D">
+        <img src="images/Mesalica grujans 3d.png" alt="Mešalica Grujans 3D">
         <p>Mešalice za beton - za sve vrste betonskih radova</p>
       </div>
       <div class="item">
-           <img src="images/brusilica grujans 3d.png" alt="Brusilica">
+        <img src="images/brusilica grujans 3d.png" alt="Brusilica">
         <p>Brusilice - snažne, pouzdane, izdržljive</p>
       </div>
-
       <div class="item">
-           <img src="images/Agregat grujans.png" alt="Agregat">
-        <p>Agregati - pouzdani </p>
+        <img src="images/Agregat grujans.png" alt="Agregat">
+        <p>Agregati - pouzdani</p>
       </div>
-      
     </div>
   </section>
+
   <section class="contact">
-    
     <h2 style="color: black; margin-top: 30px;">Naše igre</h2>
-    
-<div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-  
- <!-- <button onclick="location.href='xio.html'" style="padding: 10px 20px; font-size: 1rem; cursor: pointer;">X i O</button>-->
-  <button onclick="location.href='xio.html'" style="border:none; background:none; cursor:pointer;">
-  <img src="images/xio grujans.png" alt="X i O" width="120">
-</button>
-  
-  <!-- <button onclick="location.href='memorija.html'" style="padding: 10px 20px; font-size: 1rem; cursor: pointer;">Igra memorije</button>
-  <button onclick="location.href='puzzle.html'" style="padding: 10px 20px; font-size: 1rem; cursor: pointer;">Složipuzzle</button>
-  <button onclick="location.href='zagonetke.html'" style="padding: 10px 20px; font-size: 1rem; cursor: pointer;">Zagonetke</button>
-  <button onclick="location.href='klikbrzi.html'" style="padding: 10px 20px; font-size: 1rem; cursor: pointer;">Klik brzi</button> -->
-</div>
-    
+    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+      <button onclick="location.href='xio.html'" style="border:none; background:none; cursor:pointer;">
+        <img src="images/xio grujans.png" alt="X i O" width="120">
+      </button>
+    </div>
+
     <h2>Kontakt</h2>
     <p>Email: nenadgruja@gmail.com</p>
     <p>Telefon: +381 69 1223350</p>
   </section>
 
- <footer class="footer-container">
-  <p>© 2025 Građevinske mašine i alati</p>
+  <footer class="footer-container">
+    <p>© 2025 Građevinske mašine i alati</p>
 
-  <div id="stats-panel">
-    <div class="stats-header">
-      <span class="led-dot"></span>
-      <span class="stats-title">Posećenost</span>
+    <div id="stats-panel">
+      <div class="stats-header">
+        <span class="led-dot"></span>
+        <span class="stats-title">Posećenost</span>
+      </div>
+      <div class="stats-body">
+        <div class="stat"><span class="label">📅 Danas</span><span class="value" id="daily-count">0</span></div>
+        <div class="stat"><span class="label">📆 Nedelja</span><span class="value" id="weekly-count">0</span></div>
+        <div class="stat"><span class="label">🗓 Mesec</span><span class="value" id="monthly-count">0</span></div>
+        <div class="stat"><span class="label">📈 Ukupno</span><span class="value" id="total-count">0</span></div>
+      </div>
     </div>
-    <div class="stats-body">
-      <div class="stat"><span class="label">📅 Danas</span><span class="value" id="daily-count">0</span></div>
-      <div class="stat"><span class="label">📆 Nedelja</span><span class="value" id="weekly-count">0</span></div>
-      <div class="stat"><span class="label">🗓 Mesec</span><span class="value" id="monthly-count">0</span></div>
-      <div class="stat"><span class="label">📈 Ukupno</span><span class="value" id="total-count">0</span></div>
-    </div>
-  </div>
-</footer>
+  </footer>
 
+  <!-- 🔹 Firebase Brojač Poseta -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-<script>
-  const today = new Date();
-  const day = today.toISOString().split('T')[0];
-  const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
-  const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1v-4cQj3C0_Oz0UbVdTCSKQHbiELi04Q",
+      authDomain: "grujans-masine.firebaseapp.com",
+      databaseURL: "https://grujans-masine-default-rtdb.firebaseio.com",
+      projectId: "grujans-masine",
+      storageBucket: "grujans-masine.firebasestorage.app",
+      messagingSenderId: "68928693847",
+      appId: "1:68928693847:web:a000d1a3e2a609a95ce512"
+    };
 
-  const namespace = "grujans_masine"; // tvoj "folder" u CountAPI
-  const totalKey = "total";
-  const dailyKey = `day_${day}`;
-  const weeklyKey = `week_${week}`;
-  const monthlyKey = `month_${month}`;
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-  function updateCounter(key, elementId) {
-  
-  }
+    async function updateCounter(path, elementId) {
+      const countRef = ref(db, path);
+      await runTransaction(countRef, (current) => (current || 0) + 1);
+      const snapshot = await get(countRef);
+      document.getElementById(elementId).innerText = snapshot.val();
+    }
 
-  updateCounter(totalKey, "total-count");
-  updateCounter(dailyKey, "daily-count");
-  updateCounter(weeklyKey, "weekly-count");
-  updateCounter(monthlyKey, "monthly-count");
-<!-- 🔹 Firebase Brojač Poseta -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    const today = new Date();
+    const day = today.toISOString().split('T')[0];
+    const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
+    const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
-  // ✅ Tvoj Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyD1v-4cQj3C0_Oz0UbVdTCSKQHbiELi04Q",
-    authDomain: "grujans-masine.firebaseapp.com",
-    databaseURL: "https://grujans-masine-default-rtdb.firebaseio.com",
-    projectId: "grujans-masine",
-    storageBucket: "grujans-masine.firebasestorage.app",
-    messagingSenderId: "68928693847",
-    appId: "1:68928693847:web:a000d1a3e2a609a95ce512"
-  };
+    updateCounter("visits/total", "total-count");
+    updateCounter(`visits/daily/${day}`, "daily-count");
+    updateCounter(`visits/weekly/${week}`, "weekly-count");
+    updateCounter(`visits/monthly/${month}`, "monthly-count");
+  </script>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  async function updateCounter(path, elementId) {
-    const countRef = ref(db, path);
-    await runTransaction(countRef, (current) => (current || 0) + 1);
-    const snapshot = await get(countRef);
-    document.getElementById(elementId).innerText = snapshot.val();
-  }
-
-  const today = new Date();
-  const day = today.toISOString().split('T')[0];
-  const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
-  const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
-
-  // ✅ Pozovi funkcije
-  updateCounter("visits/total", "total-count");
-  updateCounter(`visits/daily/${day}`, "daily-count");
-  updateCounter(`visits/weekly/${week}`, "weekly-count");
-  updateCounter(`visits/monthly/${month}`, "monthly-count");
-</script>
-  
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
