@@ -104,30 +104,19 @@
   const monthlyKey = `month_${month}`;
 
   function updateCounter(key, elementId) {
-    fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`, {
-      method: "GET",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" }
-    })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById(elementId).innerText = data.value;
-    })
-    .catch(() => {
-      document.getElementById(elementId).innerText = "—";
-    });
+  
   }
 
   updateCounter(totalKey, "total-count");
   updateCounter(dailyKey, "daily-count");
   updateCounter(weeklyKey, "weekly-count");
   updateCounter(monthlyKey, "monthly-count");
-<!-- Firebase Brojač Poseta -->
+<!-- 🔹 Firebase Brojač Poseta -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
   import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-  // 🔹 Tvoj Firebase config (samo dodaj i databaseURL dole)
+  // ✅ Tvoj Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyD1v-4cQj3C0_Oz0UbVdTCSKQHbiELi04Q",
     authDomain: "grujans-masine.firebaseapp.com",
@@ -153,6 +142,7 @@
   const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
   const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
+  // ✅ Pozovi funkcije
   updateCounter("visits/total", "total-count");
   updateCounter(`visits/daily/${day}`, "daily-count");
   updateCounter(`visits/weekly/${week}`, "weekly-count");
@@ -161,6 +151,7 @@
   
 </body>
 </html>
+
 
 
 
