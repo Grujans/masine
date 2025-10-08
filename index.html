@@ -122,46 +122,28 @@
   updateCounter(dailyKey, "daily-count");
   updateCounter(weeklyKey, "weekly-count");
   updateCounter(monthlyKey, "monthly-count");
-</script>
-
-<!-- Firebase SDK -->
+<!-- Firebase Brojač Poseta -->
 <script type="module">
-  // Importuje potrebne Firebase biblioteke
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getDatabase, ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-  // 🔹 OVDE UBACI SVOJ firebaseConfig
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyD1v-4cQj3C0_Oz0UbVdTCSKQHbiELi04Q",
-  authDomain: "grujans-masine.firebaseapp.com",
-  projectId: "grujans-masine",
-  storageBucket: "grujans-masine.firebasestorage.app",
-  messagingSenderId: "68928693847",
-  appId: "1:68928693847:web:a000d1a3e2a609a95ce512",
-  measurementId: "G-JQHE48Y8YM"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  // 🔹 Tvoj Firebase config (samo dodaj i databaseURL dole)
+  const firebaseConfig = {
+    apiKey: "AIzaSyD1v-4cQj3C0_Oz0UbVdTCSKQHbiELi04Q",
+    authDomain: "grujans-masine.firebaseapp.com",
+    databaseURL: "https://grujans-masine-default-rtdb.firebaseio.com",
+    projectId: "grujans-masine",
+    storageBucket: "grujans-masine.firebasestorage.app",
+    messagingSenderId: "68928693847",
+    appId: "1:68928693847:web:a000d1a3e2a609a95ce512"
+  };
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // Funkcija za ažuriranje brojača
   async function updateCounter(path, elementId) {
     const countRef = ref(db, path);
-    await runTransaction(countRef, (current) => {
-      return (current || 0) + 1;
-    });
+    await runTransaction(countRef, (current) => (current || 0) + 1);
     const snapshot = await get(countRef);
     document.getElementById(elementId).innerText = snapshot.val();
   }
@@ -171,7 +153,6 @@ const analytics = getAnalytics(app);
   const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
   const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
-  // 🔸 Ažuriranje svih brojača
   updateCounter("visits/total", "total-count");
   updateCounter(`visits/daily/${day}`, "daily-count");
   updateCounter(`visits/weekly/${week}`, "weekly-count");
@@ -180,6 +161,7 @@ const analytics = getAnalytics(app);
   
 </body>
 </html>
+
 
 
 
