@@ -104,6 +104,13 @@
   const monthlyKey = `month_${month}`;
 
   function updateCounter(key, elementId) {
+
+fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`, {
+  method: "GET",
+  mode: "cors",
+  headers: { "Content-Type": "application/json" }
+})
+    
     fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`)
       .then(res => res.json())
       .then(data => {
@@ -124,6 +131,7 @@
   
 </body>
 </html>
+
 
 
 
