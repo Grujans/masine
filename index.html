@@ -117,7 +117,33 @@ logo.addEventListener("click", () => {
   setTimeout(() => logo.classList.remove("rotiraj"), 1000);
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const logo = document.getElementById('logo');
+  if (!logo) {
+    console.error('Logo element sa id="logo" nije pronađen.');
+    return;
+  }
+
+  logo.addEventListener('click', () => {
+    // ne dozvoli re-aktivaciju dok animacija traje
+    if (logo.classList.contains('rotiraj')) return;
+
+    logo.classList.add('rotiraj');
+
+    // ukloni klasu nakon završetka animacije
+    const handler = () => {
+      logo.classList.remove('rotiraj');
+      logo.removeEventListener('animationend', handler);
+    };
+    logo.addEventListener('animationend', handler);
+  });
+});
+</script>
+  
   
 </body>
 </html>
+
 
