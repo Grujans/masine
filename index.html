@@ -14,7 +14,7 @@
 
 <body>
   <header>
-    <img src="images/Grujans logo mali.png" alt="Grujans logo" class="logo">
+    <img src="images/Grujans logo mali.png" alt="Grujans logo" id="logo" class="logo">
     <h1>Građevinske mašine i alati</h1>
   </header>
 
@@ -106,5 +106,18 @@
     updateCounter(`visits/monthly/${month}`, "monthly-count");
   </script>
 
+<script>
+const logo = document.getElementById("logo");
+
+logo.addEventListener("click", () => {
+  // dodaj klasu koja pokreće rotaciju
+  logo.classList.add("rotiraj");
+  
+  // posle 1s (koliko traje animacija), ukloni klasu da bi moglo ponovo
+  setTimeout(() => logo.classList.remove("rotiraj"), 1000);
+});
+</script>
+  
 </body>
 </html>
+
