@@ -149,15 +149,25 @@ header h1 {
   transform-origin: center center; /* važno da se rotira oko sredine */
 }
 
-/* animacija koja okrene 360deg */
-@keyframes rotacija {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+
+
+/* ------------------------ */
+/* 🔄 Rotacija loga Grujans */
+/* ------------------------ */
+.logo {
+  width: 120px;
+  cursor: pointer;
+  transform-origin: center center; /* rotira oko centra */
 }
 
-/* klasa koja se dinamički dodaje pri kliku */
+/* animacija 360 stepeni */
+@keyframes rotacija {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* klasa koja se aktivira klikom */
 .rotiraj {
   animation: rotacija 1s linear;
 }
-
 
