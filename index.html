@@ -97,28 +97,25 @@
   const week = `${today.getFullYear()}-W${Math.ceil(today.getDate() / 7)}`;
   const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
-  const namespace = "grujans_masine"; // bilo koji naziv sajta
+  const namespace = "grujans_masine"; // tvoj "folder" u CountAPI
   const totalKey = "total";
   const dailyKey = `day_${day}`;
   const weeklyKey = `week_${week}`;
   const monthlyKey = `month_${month}`;
 
   function updateCounter(key, elementId) {
-
-fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`, {
-  method: "GET",
-  mode: "cors",
-  headers: { "Content-Type": "application/json" }
-})
-    
-    fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById(elementId).innerText = data.value;
-      })
-      .catch(() => {
-        document.getElementById(elementId).innerText = "—";
-      });
+    fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`, {
+      method: "GET",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById(elementId).innerText = data.value;
+    })
+    .catch(() => {
+      document.getElementById(elementId).innerText = "—";
+    });
   }
 
   updateCounter(totalKey, "total-count");
@@ -131,6 +128,7 @@ fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`, {
   
 </body>
 </html>
+
 
 
 
